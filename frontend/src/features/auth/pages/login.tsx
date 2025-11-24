@@ -5,8 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
 import { useForm } from "@tanstack/react-form";
 import { useLogin } from "../services";
-import { loginSchema, type LoginFormData } from "../schemas";
-import { extractValidationErrorMessage } from "@/utils/forms";
+import { type LoginFormData } from "../schemas";
 
 export default function LoginPage() {
   const loginMutation = useLogin();
@@ -16,9 +15,7 @@ export default function LoginPage() {
       email: "",
       password: "",
     } as LoginFormData,
-    validators: {
-      onChange: loginSchema,
-    },
+
     onSubmit: async ({ value }) => {
       await loginMutation.mutateAsync(value);
     },
@@ -52,13 +49,7 @@ export default function LoginPage() {
                     value={field.state.value}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
-                    className={!field.state.meta.isValid ? "border-red-500" : ""}
                   />
-                  {!field.state.meta.isValid && field.state.meta.isDirty && (
-                    <p className="text-sm text-red-500" role="alert">
-                      {field.state.meta.errors.map(extractValidationErrorMessage).join(", ")}
-                    </p>
-                  )}
                 </div>
               )}
             </form.Field>
@@ -75,13 +66,7 @@ export default function LoginPage() {
                     value={field.state.value}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
-                    className={!field.state.meta.isValid ? "border-red-500" : ""}
                   />
-                  {!field.state.meta.isValid && field.state.meta.isDirty && (
-                    <p className="text-sm text-red-500" role="alert">
-                      {field.state.meta.errors.map(extractValidationErrorMessage).join(", ")}
-                    </p>
-                  )}
                 </div>
               )}
             </form.Field>

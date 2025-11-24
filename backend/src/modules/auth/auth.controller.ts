@@ -4,6 +4,7 @@ import { RegisterDto, LoginDto } from './dto/create-auth.dto';
 import { Public } from '@/common/decorators/public.decorator';
 import { CurrentUser } from '@/common/decorators/current-user.decorator';
 import { JwtAuthGuard } from '@/common/guards/jwt-auth.guard';
+import type { User } from '@prisma/client';
 
 @Controller('auth')
 export class AuthController {
@@ -23,7 +24,7 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  async getProfile(@CurrentUser() user: any) {
+  async getProfile(@CurrentUser() user: User) {
     return this.authService.getProfile(user.id);
   }
 }

@@ -22,7 +22,11 @@ export default function RegisterPage() {
       onChange: registerSchema,
     },
     onSubmit: async ({ value }) => {
-      await registerMutation.mutateAsync(value);
+      await registerMutation.mutateAsync({
+        name: value.name,
+        email: value.email,
+        password: value.password,
+      });
     },
   });
 
