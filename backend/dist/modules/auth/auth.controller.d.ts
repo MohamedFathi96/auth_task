@@ -1,12 +1,9 @@
 import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { RegisterDto, LoginDto } from './dto/create-auth.dto';
 export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
-    create(createAuthDto: CreateAuthDto): string;
-    findAll(): string;
-    findOne(id: string): string;
-    update(id: string, updateAuthDto: UpdateAuthDto): string;
-    remove(id: string): string;
+    register(registerDto: RegisterDto): Promise<import("../../common/dto/responceHelper").SuccessResponse<import("./dto/auth-response.dto").AuthResponse>>;
+    login(loginDto: LoginDto): Promise<import("../../common/dto/responceHelper").SuccessResponse<import("./dto/auth-response.dto").AuthResponse>>;
+    getProfile(user: any): Promise<import("../../common/dto/responceHelper").SuccessResponse<import("./dto/auth-response.dto").UserProfile>>;
 }

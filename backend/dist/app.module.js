@@ -8,13 +8,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
+const core_1 = require("@nestjs/core");
 const auth_module_1 = require("./modules/auth/auth.module");
+const config_1 = require("@nestjs/config");
+const prisma_module_1 = require("./common/prisma/prisma.module");
+const jwt_auth_guard_1 = require("./common/guards/jwt-auth.guard");
+const global_exception_filter_1 = require("./common/exceptions/global-exception.filter");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [auth_module_1.AuthModule],
+        imports: [
+            auth_module_1.AuthModule,
+            config_1.ConfigModule.forRoot({
+                isGlobal: true,
+            }),
+            prisma_module_1.PrismaModule,
+        ],
+        providers: [
+            {
+                provide: core_1.APP_GUARD,
+                useClass: jwt_auth_guard_1.JwtAuthGuard,
+            },
+            {
+                provide: core_1.APP_FILTER,
+                useClass: global_exception_filter_1.GlobalExceptionFilter,
+            },
+        ],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map
